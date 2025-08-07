@@ -1,11 +1,11 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+import sqlite3 from 'sqlite3';
+import path from 'path';
 
 const db = new sqlite3.Database(path.resolve(__dirname, '../veiculos.db'));
 
-function initDb() {
+export function initDb(): Promise<void> {
   return new Promise((resolve, reject) => {
-    db.run(`CREATE TABLE IF NOT EXISTS veiculos (
+    const query = `CREATE TABLE IF NOT EXISTS veiculos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       veiculo TEXT NOT NULL,
       marca TEXT NOT NULL,
@@ -14,11 +14,13 @@ function initDb() {
       vendido BOOLEAN NOT NULL DEFAULT 0,
       created DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`, err => {
+    )`;
+
+    db.run(query, (err) => {
       if (err) reject(err);
       else resolve();
     });
   });
 }
 
-module.exports = { db, initDb };
+export { db };
