@@ -6,7 +6,7 @@ function validarMarca(marca) {
 }
 
 exports.listar = (req, res) => {
-  const { marca, ano } = req.query;
+  const { marca, ano, vendidos } = req.query;
 
   let sql = 'SELECT * FROM veiculos WHERE 1=1';
   const params = [];
@@ -18,6 +18,9 @@ exports.listar = (req, res) => {
   if (ano) {
     sql += ' AND ano = ?';
     params.push(ano);
+  }
+    if (vendidos) {
+    sql += ' AND vendido = 1';
   }
 
   db.all(sql, params, (err, rows) => {
