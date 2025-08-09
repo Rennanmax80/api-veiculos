@@ -27,8 +27,8 @@ export function listar(req: Request, res: Response) {
     params.push(Number(ano));
   }
 
-  if (vendidos === '1') {
-    query += ' AND vendido = 1';
+  if (vendidos === '0') {
+    query += ' AND vendido = 0';
   }
 
   db.all(query, params, (err, rows) => {
